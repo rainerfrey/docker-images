@@ -22,6 +22,7 @@ ENV TOMCAT_VERSION 8.0.15
 ENV TOMCAT_TGZ_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
 ENV CATALINA_HOME /opt/apache-tomcat-$TOMCAT_VERSION
+ENV CATALINA_BASE /opt/tomcat$TOMCAT_MAJOR
 
 RUN curl -SL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz \
 	&& curl -SL "$TOMCAT_TGZ_URL.asc" -o tomcat.tar.gz.asc \
@@ -29,11 +30,13 @@ RUN curl -SL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz \
 	&& tar -xvf tomcat.tar.gz -C /opt \
 	&& rm tomcat.tar.gz*
 	
-copy . $CATALINA_HOME
+RUN ["/bin/bash", "-c", "mkdir -p $CATALINA_BASE/{bin,lib,temp,webapps,work,conf/Catalina/localhost}"]
 	
-RUN chown -R tomcat:tomcat $CATALINA_HOME
+copy . $CATALINA_BASE
+	
+RUN chown -R tomcat:tomcat $CATALINA_BASE
 
 EXPOSE 8080 8009 8099
 
 USER tomcat
-CMD $CATALINA_HOME/bin/catalina.sh run
+CMD $CATALINA_BASE/bin/start.sh
