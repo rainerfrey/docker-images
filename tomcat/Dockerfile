@@ -17,7 +17,7 @@ RUN gpg --keyserver pgp.mit.edu --recv-keys \
 RUN adduser --system --group tomcat
 
 ENV TOMCAT_MAJOR 8
-ENV TOMCAT_VERSION 8.0.14
+ENV TOMCAT_VERSION 8.0.15
 
 ENV TOMCAT_TGZ_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
@@ -26,7 +26,7 @@ ENV CATALINA_HOME /opt/apache-tomcat-$TOMCAT_VERSION
 RUN curl -SL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz \
 	&& curl -SL "$TOMCAT_TGZ_URL.asc" -o tomcat.tar.gz.asc \
 	&& gpg --verify tomcat.tar.gz.asc \
-	&& tar -xvf tomcat.tar.gz -C /opt
+	&& tar -xvf tomcat.tar.gz -C /opt \
 	&& rm tomcat.tar.gz*
 	
 copy . $CATALINA_HOME
@@ -34,8 +34,6 @@ copy . $CATALINA_HOME
 RUN chown -R tomcat:tomcat $CATALINA_HOME
 
 EXPOSE 8080 8009 8099
-
-RUN ifconfig -a
 
 USER tomcat
 CMD $CATALINA_HOME/bin/catalina.sh run
