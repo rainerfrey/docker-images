@@ -14,7 +14,8 @@ RUN gpg --keyserver pgp.mit.edu --recv-keys \
 	F3A04C595DB5B6A5F1ECA43E3B7BBB100D811BBE \
 	F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23
 
-RUN adduser --system --group tomcat
+RUN groupadd --system --gid 110 tomcat
+RUN useradd --system --gid 110 --uid 110 tomcat
 
 ENV TOMCAT_MAJOR 8
 ENV TOMCAT_VERSION 8.0.15
