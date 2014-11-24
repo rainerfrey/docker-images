@@ -32,9 +32,17 @@ RUN curl -SL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz \
 	&& rm tomcat.tar.gz*
 	
 RUN ["/bin/bash", "-c", "mkdir -p $CATALINA_BASE/{bin,lib,temp,webapps,work,conf/Catalina/localhost}"]
-	
+
+ENV TOMCAT_JMXREMOTE_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/extras/catalina-jmx-remote.jar
+
+RUN curl -SL "$TOMCAT_JMXREMOTE_URL" -o catalina-jmx-remote.jar \
+	&& curl -SL "$TOMCAT_JMXREMOTE_URL.asc" -o catalina-jmx-remote.jar.asc \
+	&& gpg --verify catalina-jmx-remote.jar.asc \
+	&& cp catalina-jmx-remote.jar $CATALINA_BASE/lib \
+	&& rm catalina-jmx-remote.jar*
+
 COPY ./configure $CATALINA_BASE
-	
+
 RUN chown -R tomcat:tomcat $CATALINA_BASE
 
 EXPOSE 8080 8009 8099
