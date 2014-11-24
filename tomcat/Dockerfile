@@ -32,7 +32,7 @@ RUN curl -SL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz \
 	
 RUN ["/bin/bash", "-c", "mkdir -p $CATALINA_BASE/{bin,lib,temp,webapps,work,conf/Catalina/localhost}"]
 	
-copy . $CATALINA_BASE
+COPY ./configure $CATALINA_BASE
 	
 RUN chown -R tomcat:tomcat $CATALINA_BASE
 
