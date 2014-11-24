@@ -36,7 +36,7 @@
       <Host name="localhost"  appBase="webapps"
             unpackWARs="true" autoDeploy="false">
 
-        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="${log.base}"
                prefix="access" suffix=".log"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
 

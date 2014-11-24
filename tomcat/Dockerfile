@@ -45,6 +45,8 @@ COPY ./configure $CATALINA_BASE
 
 RUN chown -R tomcat:tomcat $CATALINA_BASE
 
+ENV LOG_BASE /logs/tomcat
+
 EXPOSE 8080 8009 8099
 
 USER tomcat
