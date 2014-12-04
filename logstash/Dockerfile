@@ -15,4 +15,6 @@ RUN ln -s /opt/logstash-$LOGSTASH_VERSION /opt/logstash
 RUN mkdir /etc/logstash
 COPY ./configure /etc/logstash
 
-ENTRYPOINT ["/opt/logstash/bin/logstash", "agent", "-f", "/etc/logstash"]
+COPY ./run.sh /opt/logstash/bin/
+
+ENTRYPOINT ["/opt/logstash/bin/run.sh"]
