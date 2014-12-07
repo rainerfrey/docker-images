@@ -1,0 +1,18 @@
+elasticsearch:
+    build: elasticsearch
+    ports:
+        - "9200"
+        
+logshipper:
+    build: logstash-shipper-tomcat
+    links:
+        - "elasticsearch:es"
+    volumes_from:
+        - "logs"
+        
+kibana:
+    build: kibana
+    ports:
+        - "5601"
+    links:
+        - "elasticsearch:es"
