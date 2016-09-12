@@ -1,6 +1,6 @@
 FROM rainerfrey/java
 
-ENV KIBANA_VERSION 4.0.0-BETA2
+ENV KIBANA_VERSION 4.0.0-beta3
 
 ENV KIBANA_URL https://download.elasticsearch.org/kibana/kibana/kibana-$KIBANA_VERSION.tar.gz
 
